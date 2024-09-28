@@ -1,0 +1,236 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{xcolor}%
+\usepackage{minted}%
+%
+\title{Documentação do Projeto: Remoção de Fundo de Vídeos com OpenCV e MediaPipe}%
+\author{Seu Nome}%
+\date{\today}%
+
+\usemintedstyle{colorful}
+\definecolor{bg}{HTML}{282A36} % Fundo estilo Dracula
+\definecolor{codegreen}{rgb}{0.0, 0.6, 0.0}
+\definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{codepurple}{rgb}{0.58, 0.0, 0.82}
+\definecolor{backcolour}{rgb}{0.12, 0.12, 0.17}
+\setminted{
+    bgcolor=bg,
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\small,
+    linenos=true,
+    numbersep=5pt,
+    tabsize=4,
+    breaklines=true,
+    escapeinside=||
+}
+%
+%
+\begin{document}%
+\normalsize%
+\maketitle%
+\section{Introdução}%
+\label{sec:Introduo}%
+Este projeto tem como objetivo realizar a remoção do fundo de vídeos utilizando técnicas de segmentação semântica com a biblioteca %
+\textbf{MediaPipe}%
+, em conjunto com o %
+\textbf{OpenCV}%
+ para processamento de vídeo. O resultado final preserva o objeto em primeiro plano (geralmente uma pessoa) e substitui o fundo por uma cor sólida (branco, por padrão) ou outro tratamento desejado. Além disso, o vídeo processado é salvo em formato MP4.
+
+%
+\section{Tecnologias Utilizadas}%
+\label{sec:TecnologiasUtilizadas}%
+\begin{itemize}%
+\item%
+\textbackslash{}textbf\{OpenCV\}: Biblioteca para processamento de imagens e vídeos.%
+\item%
+\textbackslash{}textbf\{MediaPipe\}: Biblioteca do Google que fornece modelos de aprendizado de máquina prontos para segmentação de imagens e vídeos.%
+\item%
+\textbackslash{}textbf\{NumPy\}: Biblioteca para manipulação eficiente de arrays e matrizes numéricas.%
+\end{itemize}
+
+%
+\section{Instalação e Configuração do Ambiente}%
+\label{sec:InstalaoeConfiguraodoAmbiente}%
+\subsection{Requisitos de Sistema}%
+\label{subsec:RequisitosdeSistema}%
+\begin{itemize}%
+\item%
+Python 3.x%
+\item%
+Sistema operacional: Windows, Linux, ou macOS%
+\item%
+Ferramentas de linha de comando (ex: Git Bash ou terminal padrão)%
+\end{itemize}
+
+%
+\subsection{Bibliotecas Necessárias}%
+\label{subsec:BibliotecasNecessrias}%
+Para rodar este projeto, você precisa instalar algumas bibliotecas Python. Você pode fazer isso utilizando o %
+\textbf{pip}%
+ dentro do seu ambiente virtual. Execute os seguintes comandos no terminal:%
+
+\begin{minted}[linenos]{bash}
+pip install opencv-python
+pip install numpy
+pip install mediapipe
+\end{minted}
+
+%
+\subsection{Estrutura do Projeto}%
+\label{subsec:EstruturadoProjeto}%
+
+\begin{verbatim}
+MMPG-Background/
+|
++-- video/
+|   \-- video.mp4               # Vídeo original de entrada
++-- venv/                       # Ambiente virtual (opcional)
++-- main.py                     # Script principal do projeto
++-- .gitignore                  # Arquivos ignorados pelo Git
++-- LICENSE                     # Licença do projeto
+\-- README.md                   # Instruções sobre o projeto
+\end{verbatim}
+
+%
+\section{Descrição do Código}%
+\label{sec:DescriodoCdigo}%
+\subsection{1. Importação das Bibliotecas}%
+\label{subsec:1.ImportaodasBibliotecas}%
+O código começa com a importação das bibliotecas necessárias: %
+\texttt{cv2}%
+ (OpenCV), %
+\texttt{mediapipe}%
+ para segmentação, e %
+\texttt{numpy}%
+ para operações de arrays.%
+
+\begin{minted}[linenos]{python}
+import cv2
+import mediapipe as mp
+import numpy as np
+\end{minted}
+
+%
+\subsection{2. Inicialização do MediaPipe}%
+\label{subsec:2.InicializaodoMediaPipe}%
+Inicializamos o MediaPipe com o modelo de segmentação, que detecta a pessoa no vídeo.%
+
+\begin{minted}[linenos]{python}
+mp_selfie_segmentation = mp.solutions.selfie_segmentation
+segmentation = mp_selfie_segmentation.SelfieSegmentation(model_selection=1)
+\end{minted}
+
+%
+\subsection{3. Definição dos Caminhos de Arquivos}%
+\label{subsec:3.DefiniodosCaminhosdeArquivos}%
+Definimos os caminhos do vídeo de entrada e de saída. O vídeo de entrada deve estar localizado no caminho especificado:%
+
+\begin{minted}[linenos]{python}
+video_path = r'C:\\Caminho\\video.mp4'
+output_path = r'C:\\Caminho\\video_processado.mp4'
+\end{minted}
+
+%
+\subsection{4. Leitura e Escrita de Vídeos}%
+\label{subsec:4.LeituraeEscritadeVdeos}%
+O OpenCV é usado para ler o vídeo (%
+\texttt{cv2.VideoCapture}%
+) e configurar a escrita do vídeo processado (%
+\texttt{cv2.VideoWriter}%
+). O vídeo de saída mantém a resolução e o FPS (frames por segundo) do vídeo original.%
+
+\begin{minted}[linenos]{python}
+cap = cv2.VideoCapture(video_path)
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fps = int(cap.get(cv2.CAP_PROP_FPS))
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+\end{minted}
+
+%
+\subsection{5. Loop de Processamento de Frames}%
+\label{subsec:5.LoopdeProcessamentodeFrames}%
+Cada frame do vídeo é lido e processado em um loop. Para cada frame:%
+\begin{itemize}%
+\item%
+Ele é convertido para o formato RGB, necessário pelo MediaPipe.%
+\item%
+A segmentação de fundo é realizada.%
+\item%
+O fundo é substituído por uma cor sólida (branco por padrão).%
+\end{itemize}%
+
+\begin{minted}[linenos]{python}
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret: break
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    result = segmentation.process(frame_rgb)
+    mask = result.segmentation_mask > 0.5
+    mask_3d = np.dstack((mask, mask, mask))
+    person_segmented = np.where(mask_3d, frame, BACKGROUND_COLOR)
+    person_segmented = person_segmented.astype(np.uint8)
+    out.write(person_segmented)
+    cv2.imshow('Fundo Removido com Cores Preservadas', person_segmented)
+    if cv2.waitKey(30) & 0xFF == ord('q'): break
+\end{minted}
+
+%
+\subsection{6. Finalização e Liberação de Recursos}%
+\label{subsec:6.FinalizaoeLiberaodeRecursos}%
+Ao final do processamento, o vídeo de saída é liberado e todas as janelas são fechadas:%
+
+\begin{minted}[linenos]{python}
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+\end{minted}
+
+%
+\section{Opções de Customização}%
+\label{sec:OpesdeCustomizao}%
+\begin{itemize}%
+\item%
+\textbackslash{}textbf\{Cor do Fundo\}: A cor de fundo padrão é branco (255, 255, 255). Você pode alterar isso ajustando a variável BACKGROUND\_COLOR.%
+\item%
+\textbackslash{}textbf\{Fundo Transparente\}: Se desejar, pode implementar um fundo transparente usando máscaras alfa.%
+\item%
+\textbackslash{}textbf\{Alteração de Resolução e FPS\}: É possível alterar as propriedades do vídeo de saída definindo os parâmetros de resolução e taxa de quadros no cv2.VideoWriter.%
+\end{itemize}
+
+%
+\section{Melhorias Futuras}%
+\label{sec:MelhoriasFuturas}%
+\begin{itemize}%
+\item%
+\textbackslash{}textbf\{Aplicação de IA Avançada\}: Você pode explorar o uso de redes neurais mais robustas para obter segmentações mais precisas, especialmente em vídeos com cenários complexos.%
+\item%
+\textbackslash{}textbf\{Integração com GUI\}: Adicionar uma interface gráfica (usando Tkinter ou PyQt) pode facilitar o uso do programa por usuários não técnicos.%
+\item%
+\textbackslash{}textbf\{Substituição de Fundo por Imagem/Outro Vídeo\}: Pode{-}se substituir o fundo removido por uma imagem ou outro vídeo, simulando um efeito de 'chroma key'.%
+\end{itemize}
+
+%
+\section{Erros Comuns e Soluções}%
+\label{sec:ErrosComunseSolues}%
+\begin{itemize}%
+\item%
+\textbackslash{}textbf\{Erro ao carregar o vídeo\}: Certifique{-}se de que o caminho para o vídeo de entrada esteja correto e o arquivo exista no local especificado.%
+\item%
+\textbackslash{}textbf\{Problemas de exibição de vídeo (cv2.imshow)\}: O OpenCV pode gerar erros ao exibir vídeos dependendo do formato. A conversão para uint8 é crucial para evitar problemas de exibição.%
+\end{itemize}
+
+%
+\section{Licença}%
+\label{sec:Licena}%
+Este projeto está licenciado sob a Licença MIT {-} consulte o arquivo LICENSE para mais detalhes.
+
+%
+\end{document}

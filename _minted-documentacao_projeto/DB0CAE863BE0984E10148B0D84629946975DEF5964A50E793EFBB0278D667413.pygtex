@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{cap} \PYG{o}{=} \PYG{n}{cv2}\PYG{o}{.}\PYG{n}{VideoCapture}\PYG{p}{(}\PYG{n}{video\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{width} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{cap}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n}{cv2}\PYG{o}{.}\PYG{n}{CAP\PYGZus{}PROP\PYGZus{}FRAME\PYGZus{}WIDTH}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{height} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{cap}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n}{cv2}\PYG{o}{.}\PYG{n}{CAP\PYGZus{}PROP\PYGZus{}FRAME\PYGZus{}HEIGHT}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{fps} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{cap}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n}{cv2}\PYG{o}{.}\PYG{n}{CAP\PYGZus{}PROP\PYGZus{}FPS}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{fourcc} \PYG{o}{=} \PYG{n}{cv2}\PYG{o}{.}\PYG{n}{VideoWriter\PYGZus{}fourcc}\PYG{p}{(}\PYG{o}{*}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{mp4v}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{out} \PYG{o}{=} \PYG{n}{cv2}\PYG{o}{.}\PYG{n}{VideoWriter}\PYG{p}{(}\PYG{n}{output\PYGZus{}path}\PYG{p}{,} \PYG{n}{fourcc}\PYG{p}{,} \PYG{n}{fps}\PYG{p}{,} \PYG{p}{(}\PYG{n}{width}\PYG{p}{,} \PYG{n}{height}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}

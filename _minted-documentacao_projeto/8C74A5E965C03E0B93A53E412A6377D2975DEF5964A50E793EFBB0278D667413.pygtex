@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{while} \PYG{n}{cap}\PYG{o}{.}\PYG{n}{isOpened}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{ret}\PYG{p}{,} \PYG{n}{frame} \PYG{o}{=} \PYG{n}{cap}\PYG{o}{.}\PYG{n}{read}\PYG{p}{(}\PYG{p}{)}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{ret}\PYG{p}{:} \PYG{k}{break}
+    \PYG{n}{frame\PYGZus{}rgb} \PYG{o}{=} \PYG{n}{cv2}\PYG{o}{.}\PYG{n}{cvtColor}\PYG{p}{(}\PYG{n}{frame}\PYG{p}{,} \PYG{n}{cv2}\PYG{o}{.}\PYG{n}{COLOR\PYGZus{}BGR2RGB}\PYG{p}{)}
+    \PYG{n}{result} \PYG{o}{=} \PYG{n}{segmentation}\PYG{o}{.}\PYG{n}{process}\PYG{p}{(}\PYG{n}{frame\PYGZus{}rgb}\PYG{p}{)}
+    \PYG{n}{mask} \PYG{o}{=} \PYG{n}{result}\PYG{o}{.}\PYG{n}{segmentation\PYGZus{}mask} \PYG{o}{\PYGZgt{}} \PYG{l+m+mf}{0.5}
+    \PYG{n}{mask\PYGZus{}3d} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dstack}\PYG{p}{(}\PYG{p}{(}\PYG{n}{mask}\PYG{p}{,} \PYG{n}{mask}\PYG{p}{,} \PYG{n}{mask}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{person\PYGZus{}segmented} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{mask\PYGZus{}3d}\PYG{p}{,} \PYG{n}{frame}\PYG{p}{,} \PYG{n}{BACKGROUND\PYGZus{}COLOR}\PYG{p}{)}
+    \PYG{n}{person\PYGZus{}segmented} \PYG{o}{=} \PYG{n}{person\PYGZus{}segmented}\PYG{o}{.}\PYG{n}{astype}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{uint8}\PYG{p}{)}
+    \PYG{n}{out}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{n}{person\PYGZus{}segmented}\PYG{p}{)}
+    \PYG{n}{cv2}\PYG{o}{.}\PYG{n}{imshow}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Fundo Removido com Cores Preservadas}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{person\PYGZus{}segmented}\PYG{p}{)}
+    \PYG{k}{if} \PYG{n}{cv2}\PYG{o}{.}\PYG{n}{waitKey}\PYG{p}{(}\PYG{l+m+mi}{30}\PYG{p}{)} \PYG{o}{\PYGZam{}} \PYG{l+m+mh}{0xFF} \PYG{o}{==} \PYG{n+nb}{ord}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{q}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:} \PYG{k}{break}
+\end{Verbatim}

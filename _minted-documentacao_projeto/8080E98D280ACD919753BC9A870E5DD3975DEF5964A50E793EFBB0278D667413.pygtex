@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{cap}\PYG{o}{.}\PYG{n}{release}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{out}\PYG{o}{.}\PYG{n}{release}\PYG{p}{(}\PYG{p}{)}
+\PYG{n}{cv2}\PYG{o}{.}\PYG{n}{destroyAllWindows}\PYG{p}{(}\PYG{p}{)}
+\end{Verbatim}

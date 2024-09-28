@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{mp\PYGZus{}selfie\PYGZus{}segmentation} \PYG{o}{=} \PYG{n}{mp}\PYG{o}{.}\PYG{n}{solutions}\PYG{o}{.}\PYG{n}{selfie\PYGZus{}segmentation}
+\PYG{n}{segmentation} \PYG{o}{=} \PYG{n}{mp\PYGZus{}selfie\PYGZus{}segmentation}\PYG{o}{.}\PYG{n}{SelfieSegmentation}\PYG{p}{(}\PYG{n}{model\PYGZus{}selection}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\end{Verbatim}
