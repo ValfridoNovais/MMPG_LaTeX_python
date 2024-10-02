@@ -1,0 +1,81 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+%
+\title{Documentação dos Códigos: Inicial e Melhorado}%
+\author{Especialista Python}%
+\date{\today}%
+%
+\begin{document}%
+\normalsize%
+\maketitle%
+\section{Introdução}%
+\label{sec:Introduo}%
+Esta documentação descreve dois códigos, "CODIGO INICIAL" e "CODIGO MELHORADO", que realizam a detecção de faces usando MediaPipe. Ambos os códigos capturam imagens da webcam, detectam faces e salvam fotos de intrusos. O "CODIGO MELHORADO" introduz melhorias no reconhecimento facial e na gestão de arquivos.
+
+%
+\section{Documentação do CODIGO INICIAL}%
+\label{sec:DocumentaodoCODIGOINICIAL}%
+O "CODIGO INICIAL" é responsável por detectar uma face na tela e salvar fotos de intrusos quando uma face diferente da memorizada é detectada.%
+\subsection{1. Importação de Bibliotecas}%
+\label{subsec:1.ImportaodeBibliotecas}%
+O código começa importando as bibliotecas essenciais: OpenCV para captura de vídeo, MediaPipe para a detecção de malhas faciais, Numpy para cálculos numéricos e outras bibliotecas para manipulação de arquivos e tempo.
+
+%
+\subsection{2. Funções de Comparação e Memorização de Faces}%
+\label{subsec:2.FunesdeComparaoeMemorizaodeFaces}%
+As funções criadas no código incluem:%
+\begin{enumerate}%
+\item%
+`compare\_faces()`: Compara duas faces baseadas nos pontos de referência detectados.%
+\item%
+`ask\_memorize\_face()`: Abre um popup perguntando se o usuário deseja memorizar uma face detectada.%
+\item%
+`create\_directory\_structure()`: Cria pastas para armazenar as imagens, organizando por ano, mês e dia.%
+\item%
+`save\_intruder\_photo()`: Salva a imagem do intruso detectado.%
+\item%
+`save\_memorized\_photo()`: Salva a imagem de uma face memorizada.%
+\end{enumerate}
+
+%
+\subsection{3. Captura e Processamento de Vídeo}%
+\label{subsec:3.CapturaeProcessamentodeVdeo}%
+O código inicializa a webcam com `cv2.VideoCapture(0)` e processa cada frame, detectando faces e desenhando a malha facial com MediaPipe. Se uma face for detectada, o código compara com as faces memorizadas e salva a imagem do intruso, se for uma face nova.
+
+%
+\section{Documentação do CODIGO MELHORADO}%
+\label{sec:DocumentaodoCODIGOMELHORADO}%
+O "CODIGO MELHORADO" aprimora o processo de detecção e gerenciamento de faces. Ele adiciona suporte para múltiplas faces, melhorias na comparação facial e armazenamento de imagens.%
+\subsection{1. Alterações Importantes}%
+\label{subsec:1.AlteraesImportantes}%
+O código foi modificado para detectar múltiplas faces, armazenar várias faces memorizadas e garantir que apenas faces não memorizadas sejam salvas como intrusas.
+
+%
+\subsection{2. Detecção de Múltiplas Faces}%
+\label{subsec:2.DetecodeMltiplasFaces}%
+`max\_num\_faces` foi ajustado para detectar várias faces simultaneamente, aumentando a robustez do sistema.
+
+%
+\subsection{3. Gerenciamento de Faces Memorizadas}%
+\label{subsec:3.GerenciamentodeFacesMemorizadas}%
+Agora, múltiplas faces podem ser memorizadas e o código consegue comparar a face detectada com todas as memorizadas antes de salvar como intruso.
+
+%
+\section{Comparação entre o CODIGO INICIAL e CODIGO MELHORADO}%
+\label{sec:ComparaoentreoCODIGOINICIALeCODIGOMELHORADO}%
+As principais diferenças entre os dois códigos estão no tratamento de múltiplas faces e na otimização do processo de comparação e salvamento de imagens.%
+\begin{enumerate}%
+\item%
+Suporte para múltiplas faces no "CODIGO MELHORADO".%
+\item%
+Armazenamento eficiente de imagens organizadas por data e hora.%
+\item%
+Maior precisão na comparação de faces.%
+\end{enumerate}
+
+%
+\end{document}
